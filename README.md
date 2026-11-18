@@ -54,39 +54,30 @@ Detalle completo en [SKILL.md](SKILL.md).
 
 ## Instalación / Install
 
-Copiá la carpeta `haz-test` (con `SKILL.md` adentro) al directorio de skills de tu harness.
-Copy the `haz-test` folder (with `SKILL.md` inside) into your harness's skills directory.
+Decile esto a tu agente. Él sabe dónde van las skills de su harness.
+Tell your agent this. It knows where its harness stores skills.
 
-| Harness | Global (usuario) | Proyecto (repo) |
-|---|---|---|
-| **Qoder** | `~/.qoder/skills/` | `.qoder/skills/` |
-| **Claude Code** | `~/.claude/skills/` | `.claude/skills/` |
-| **Codex CLI** | `~/.codex/skills/` | `.codex/skills/` |
-| **OpenClaw** | `~/.openclaw/skills/` | `.openclaw/skills/` |
-| **OpenCode** | `~/.config/opencode/skills/` | `.opencode/skills/` |
-| **DSH** (DeepSeek Harness) | `~/.dsh/skills/` o `~/.agents/skills/` | `.dsh/skills/` o `.agents/skills/` |
-| **Pi** | `~/.pi/agent/skills/` | `.pi/skills/` |
-| **Gemini CLI** | `~/.gemini/skills/` | `.gemini/skills/` |
-| **GitHub Copilot** | `~/.copilot/skills/` o `~/.agents/skills/` | `.github/skills/` |
-| **Cursor** | — | `.cursor/skills/` |
+```text
+Copiá la skill de https://github.com/palomo1632-prog/haz-test en mi directorio de skills
+como `haz-test` y usala para escribir los tests de este proyecto. Confirmame cuando esté
+instalada y seguí la skill desde el paso 0.
+```
 
-Ejemplo: `~/.claude/skills/haz-test/SKILL.md`.
-Example: `~/.claude/skills/haz-test/SKILL.md`.
+```text
+Copy the skill from https://github.com/palomo1632-prog/haz-test into my skills directory
+as `haz-test` and use it to write this project's tests. Confirm when installed, then
+follow the skill from step 0.
+```
 
-**Instalación única:** `~/.agents/skills/` es leída por DSH, OpenCode y Copilot (y por OpenCode
-también `~/.claude/skills`). Si usás varios harnesses, instalala ahí y evitalo en todos.
-**Install once:** `~/.agents/skills/` is read by DSH, OpenCode and Copilot (OpenCode also reads
-`~/.claude/skills`). If you use several harnesses, install it there once.
+Sirve en Qoder, Claude Code, Codex, OpenCode, DSH, Pi, Copilot y cualquier agente que lea
+`SKILL.md`. Si tu agente no puede descargar repos, pegale el contenido de [SKILL.md](SKILL.md)
+y pedile que lo guarde como `haz-test/SKILL.md`.
+Works in Qoder, Claude Code, Codex, OpenCode, DSH, Pi, Copilot and any agent that reads
+`SKILL.md`. If your agent cannot download repos, paste the contents of [SKILL.md](SKILL.md)
+and ask it to save it as `haz-test/SKILL.md`.
 
-Cualquier otro agente que lea `SKILL.md` (Windsurf, Kiro, Antigravity, etc.): copiá la carpeta a
-su directorio de skills. Si el agente no soporta skills, pegá el contenido de `SKILL.md` como
-instrucciones o en su `AGENTS.md` — funciona igual.
-Any other agent that reads `SKILL.md` (Windsurf, Kiro, Antigravity, etc.): copy the folder into
-its skills directory. If the agent has no skills support, paste `SKILL.md` into its instructions
-or `AGENTS.md` — it works the same.
-
-Se invoca con `/haz-test` o simplemente pidiendo "haz test" (o "write tests" en inglés). /
-Invoke it with `/haz-test` or just say "haz test" ("write tests" in English).
+Después se usa con `/haz-test` o simplemente pidiendo "haz test". / Then use it with
+`/haz-test` or just say "haz test".
 
 ## Fuentes / Sources
 
