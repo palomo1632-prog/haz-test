@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/haz-test.png" alt="How haz-test works: scan the repo, reuse or add, list invariants, expect not copy, red then green" width="100%">
+  <img src="assets/haz-test.png" alt="A red failing-test dot turning green through an arrow: expect tests" width="100%">
 </p>
 
 # haz-test
