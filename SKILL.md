@@ -1,70 +1,71 @@
 ---
 name: haz-test
-description: Escribir o completar los tests de un proyecto con la filosofía de "expect tests" (assert sobre el resultado visible esperado, código real, dobles solo en los bordes externos). Primero detecta si el proyecto ya usa esta forma y la respeta; si no la usa, la implementa. Usar cuando el usuario diga "haz test", "hazme los tests", "escribí tests", "agregá tests", "tests para esto", "test de regresión de este bug" o invoque /haz-test.
+description: Write or complete a project's tests with the "expect tests" philosophy — assert the expected visible outcome, run the real code, stub only external edges. First detects whether the project already tests this way and follows it; if not, it implements it. Use when the user says "haz test", "write tests", "add tests", "tests for this", "regression test for this bug", or invokes /haz-test.
 ---
 
 # Haz test
 
-Objetivo: tests que declaran el resultado visible esperado ("dado X, espero Y") y ejecutan el
-código real. Un test tiene que romperse cuando se rompe una regla de negocio, no cuando alguien
-refactoriza.
+Goal: tests that declare the expected visible outcome ("given X, expect Y") and run the real
+code. A test must fail when a business rule breaks — not when someone refactors.
 
-## Paso 0 — Reconocer el proyecto (siempre, antes de escribir nada)
+## Step 0 — Read the project first (always)
 
-Averigualo leyendo el repo; no preguntes lo que podés ver:
+Find out by reading the repo; never ask what you can see:
 
-- ¿Hay runner y comando de test? (`package.json`, `pytest`, `go test`, `phpunit`, `cargo test`…)
-- ¿Dónde viven los tests y cómo se llaman?
-- ¿Los tests llaman al código real y solo simulan lo externo, o simulan todo?
-- ¿Afirman sobre salidas visibles y contratos, o reimplementan la lógica?
-- ¿Hay docs de convención de tests?
+- Is there a test runner and a test command? (`package.json`, `pytest`, `go test`, `phpunit`,
+  `cargo test`…)
+- Where do tests live and how are they named?
+- Do tests call the real code and stub only external edges, or do they mock everything?
+- Do they assert visible outcomes and public contracts, or reimplement the logic?
+- Is there a testing-convention doc?
 
-Decisión:
+Decision:
 
-- **Ya usa esta forma** → seguí sus convenciones (runner, carpetas, nombres, helpers, idioma).
-  No borres ni reescribas tests que pasan. Dejá la línea base (qué pasa y qué falla hoy) y sumá
-  tests donde falta cobertura del camino crítico o en las zonas que toques.
-- **No la usa o no hay tests** → implementala con el mínimo: agregá el runner estándar del stack
-  sin cambiar comportamiento, creá la carpeta de tests, descubrí los archivos automáticamente y
-  empezá por el camino crítico.
+- **Already uses this style** → follow its conventions (runner, folders, names, helpers,
+  language). Never delete or rewrite passing tests. Record the baseline (what passes and what
+  fails today) and add tests only where critical coverage is missing or in the areas you touch.
+- **Not this style / no tests** → implement it with the minimum: add the stack's standard runner
+  without changing behavior, create the tests folder, auto-discover test files, and start with
+  the critical path.
 
-## Paso 1 — Invariantes
+## Step 1 — Invariants
 
-Antes de escribir tests, listá las invariantes: reglas que nunca se pueden romper (plata,
-permisos, datos del usuario, orden de pasos, estados). Cada una lleva al menos un test.
+Before writing tests, list the invariants: rules that must never break (money, permissions,
+user data, ordering, states). Every invariant gets at least one test.
 
-## Reglas
+## Rules
 
-1. "Dado X, espero Y" sobre lo que ve el usuario o el contrato público. Código real; nunca copies
-   la lógica en el test. Si el test duplica un cálculo, cambialo por un assert sobre la salida.
-2. Dobles solo en los bordes externos: red, APIs de terceros, mensajería, reloj, base de
-   producción. Todo lo demás corre de verdad. Aislamiento: base o archivo temporal por test.
-3. Un test = una regla, con nombre en una frase. Si nace de un bug, citá el caso o ticket.
-4. Fixtures con valores distintos a los reales: un valor hardcodeado tiene que romper el test.
-5. Todo bug arreglado trae un test de regresión que se ve ROJO sin el arreglo y VERDE con él.
-   Mostralo antes de cerrar.
-6. Si un bug se repite: 2ª vez, mismo test con otro estímulo; 3ª vez, matriz de variantes de la
-   clase de casos en vez de otro parche.
-7. Assert de texto exacto solo si ese texto lo recibe el usuario final y está aprobado. Nunca
-   tests de tono o calidad de respuestas de IA: eso se valida con usuarios reales.
-8. Suite sin red, determinista y rápida; descubrimiento automático de archivos para que ninguno
-   quede afuera; un solo comando corre todo.
-9. No testees lo trivial (getters, configuración, HTML estático) ni lo que no puede costar
-   plata o confianza. Si el proyecto no tiene reglas de negocio (landing, marketing), decilo y
-   no fuerces tests: con 0–2 alcanza.
+1. "Given X, expect Y" on what the user sees or on the public contract. Run the real code;
+   never copy the logic into the test. If the test starts duplicating a calculation, replace it
+   with an assert on the output.
+2. Stub only external edges: network, third-party APIs, messaging, clock, production database.
+   Everything else runs for real. Isolation: a temporary database or file per test.
+3. One test = one rule, named in a sentence. If it comes from a bug, cite the case or ticket.
+4. Fixtures use values different from production, so any hardcoded value makes the test fail.
+5. Every bug fix ships a regression test that is RED without the fix and GREEN with it. Show
+   both runs before closing.
+6. Repeated bug: 2nd time, same test with a different stimulus; 3rd time, a matrix over the
+   class of cases instead of another patch.
+7. Exact-text asserts only for text the end user receives and that is approved. Never test AI
+   tone or response quality: validate that with real users.
+8. The suite runs with no network, deterministically and fast; auto-discover test files so none
+   is left out; a single command runs everything.
+9. Do not test the trivial (getters, config, static HTML) or anything that cannot cost money or
+   trust. If the project has no business rules (landing page, marketing), say so and do not
+   force tests: 0 to 2 is enough.
 
-## Proyecto nuevo
+## New project
 
-Trabajá en vertical: una invariante → test que falla (rojo) → implementación → verde → la
-siguiente. No escribas todos los tests antes del código.
+Work vertically: one invariant → failing test (red) → implementation → green → next. Never
+write all tests before the code.
 
-## Proyecto en marcha
+## Existing project
 
-No toques lo que pasa. Si no hay runner, agregalo sin cambiar comportamiento. Priorizá plata,
-permisos y datos del usuario; el resto se agrega en las zonas que se toquen.
+Do not touch what passes. If there is no runner, add one without changing behavior. Prioritize
+money, permissions and user data; the rest gets covered in the areas you touch.
 
-## Al cerrar, reportá
+## Report at the end
 
-- Forma detectada (existente o implementada) y en qué te basaste.
-- Invariantes cubiertas y cuáles quedaron sin test, con el motivo.
-- Evidencia del rojo → verde de los tests de regresión.
+- Detected style (existing or implemented) and the evidence.
+- Invariants covered and which ones have no test, with the reason.
+- Evidence of red → green for the regression tests.
