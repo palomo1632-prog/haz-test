@@ -54,16 +54,39 @@ Detalle completo en [SKILL.md](SKILL.md).
 
 ## Instalación / Install
 
-```text
-# Qoder
-~/.qoder/skills/haz-test/SKILL.md
+Copiá la carpeta `haz-test` (con `SKILL.md` adentro) al directorio de skills de tu harness.
+Copy the `haz-test` folder (with `SKILL.md` inside) into your harness's skills directory.
 
-# Claude Code and similar
-.claude/skills/haz-test/SKILL.md
-```
+| Harness | Global (usuario) | Proyecto (repo) |
+|---|---|---|
+| **Qoder** | `~/.qoder/skills/` | `.qoder/skills/` |
+| **Claude Code** | `~/.claude/skills/` | `.claude/skills/` |
+| **Codex CLI** | `~/.codex/skills/` | `.codex/skills/` |
+| **OpenClaw** | `~/.openclaw/skills/` | `.openclaw/skills/` |
+| **OpenCode** | `~/.config/opencode/skills/` | `.opencode/skills/` |
+| **DSH** (DeepSeek Harness) | `~/.dsh/skills/` o `~/.agents/skills/` | `.dsh/skills/` o `.agents/skills/` |
+| **Pi** | `~/.pi/agent/skills/` | `.pi/skills/` |
+| **Gemini CLI** | `~/.gemini/skills/` | `.gemini/skills/` |
+| **GitHub Copilot** | `~/.copilot/skills/` o `~/.agents/skills/` | `.github/skills/` |
+| **Cursor** | — | `.cursor/skills/` |
 
-Se invoca con `/haz-test` o simplemente pidiendo "haz test". / Invoke it with `/haz-test` or
-just say "haz test".
+Ejemplo: `~/.claude/skills/haz-test/SKILL.md`.
+Example: `~/.claude/skills/haz-test/SKILL.md`.
+
+**Instalación única:** `~/.agents/skills/` es leída por DSH, OpenCode y Copilot (y por OpenCode
+también `~/.claude/skills`). Si usás varios harnesses, instalala ahí y evitalo en todos.
+**Install once:** `~/.agents/skills/` is read by DSH, OpenCode and Copilot (OpenCode also reads
+`~/.claude/skills`). If you use several harnesses, install it there once.
+
+Cualquier otro agente que lea `SKILL.md` (Windsurf, Kiro, Antigravity, etc.): copiá la carpeta a
+su directorio de skills. Si el agente no soporta skills, pegá el contenido de `SKILL.md` como
+instrucciones o en su `AGENTS.md` — funciona igual.
+Any other agent that reads `SKILL.md` (Windsurf, Kiro, Antigravity, etc.): copy the folder into
+its skills directory. If the agent has no skills support, paste `SKILL.md` into its instructions
+or `AGENTS.md` — it works the same.
+
+Se invoca con `/haz-test` o simplemente pidiendo "haz test" (o "write tests" en inglés). /
+Invoke it with `/haz-test` or just say "haz test" ("write tests" in English).
 
 ## Fuentes / Sources
 
